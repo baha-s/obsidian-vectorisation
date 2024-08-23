@@ -52,7 +52,7 @@ def draw_dropdown(countries, selected_country, dropdown_open):
     # If the dropdown is open, draw the list of countries
     if dropdown_open:
         for i, country in enumerate(countries):
-            item_rect = pygame.Rect(width / 4, height / 3 + 30 * (i + 1), width / 2, 30)
+            item_rect = pygame.Rect(width / 4, height / 3 + 30 * (i), width / 2, 30)
             if country == selected_country:
                 # Highlight selected country with pride colors
                 for j, color in enumerate(pride_colors):
@@ -63,11 +63,39 @@ def draw_dropdown(countries, selected_country, dropdown_open):
             display.blit(item_text, (item_rect.x + 5, item_rect.y + 5))
 
 def ask_country():
-    # Prompt the user to select a country from the dropdown
+    # Initialize Pygame
+    pygame.init()
+    width, height = 800, 600
+    display = pygame.display.set_mode((width, height))
+    pygame.display.set_caption('Select Country')
+    font = pygame.font.Font(None, 30)
+    white = (255, 255, 255)
+    black = (0, 0, 0)
+    grey = (200, 200, 200)
+
+    # List of countries
     countries = ["Kyrgyzstan", "USA", "Canada", "Germany", "France"]
     selected_country = countries[0]
     dropdown_open = False
 
+    def draw_dropdown(countries, selected_country, dropdown_open):
+        dropdown_rect = pygame.Rect(width / 4, height / 3, width / 2, 30)
+        pygame.draw.rect(display, black, dropdown_rect, 2)
+        display.fill(white, dropdown_rect)
+        
+        # Draw selected country
+        text_surface = font.render(selected_country, True, black)
+        display.blit(text_surface, (dropdown_rect.x + 5, dropdown_rect.y + 5))
+        
+        if dropdown_open:
+            # Draw dropdown items
+            for i, country in enumerate(countries):
+                item_rect = pygame.Rect(dropdown_rect.x, dropdown_rect.y + 30 * (i + 1), dropdown_rect.width, 30)
+                pygame.draw.rect(display, grey, item_rect)
+                item_surface = font.render(country, True, black)
+                display.blit(item_surface, (item_rect.x + 5, item_rect.y + 5))
+
+    # Main loop
     while True:
         display.fill(white)
         draw_dropdown(countries, selected_country, dropdown_open)
@@ -80,19 +108,21 @@ def ask_country():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_DOWN:
                     dropdown_open = not dropdown_open
-                if event.key == pygame.K_RETURN and not dropdown_open:
+                elif event.key == pygame.K_RETURN and not dropdown_open:
+                    pygame.quit()
                     return selected_country
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = event.pos
+                dropdown_rect = pygame.Rect(width / 4, height / 3, width / 2, 30)
                 if dropdown_open:
                     for i, country in enumerate(countries):
-                        item_rect = pygame.Rect(width / 4, height / 3 + 30 * (i + 1), width / 2, 30)
+                        item_rect = pygame.Rect(dropdown_rect.x, dropdown_rect.y + 30 * (i + 1), dropdown_rect.width, 30)
                         if item_rect.collidepoint(mouse_pos):
                             selected_country = country
                             dropdown_open = False
                             break
-                else:
-                    dropdown_open = True  # Open dropdown if clicked outside
+                elif dropdown_rect.collidepoint(mouse_pos):
+                    dropdown_open = True
 
 def draw_kyrgyzstan_flag_wrapper():
     # Wrapper function to draw the Kyrgyzstan flag

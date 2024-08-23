@@ -1,9 +1,23 @@
 import pygame
 import time
 import random
+import sys
 
 # Initialize Pygame
 pygame.init()
+
+def ask_country():
+    print("Where are you from? (Enter the name of your country)")
+    return input().strip().lower()
+
+country_flags = {
+    "kyrgyzstan": draw_kyrgyzstan_flag,
+    "uk": draw_union_jack,  # Assuming we keep the Union Jack function
+    # Add more countries and their corresponding flag drawing functions here
+}
+
+def select_flag(country):
+    return country_flags.get(country, draw_kyrgyzstan_flag)  # Default to Kyrgyzstan flag if country not found
 
 # Colors
 white = (255, 255, 255)
@@ -98,6 +112,9 @@ def explosion_effect(x, y):
         draw_kyrgyzstan_flag()  # Redraw the flag to clear the explosion effect
 
 def gameLoop():
+    country = ask_country()
+    draw_flag = select_flag(country)
+    
     print("Starting game loop...")  # Debugging statement
     game_over = False
     game_close = False
@@ -153,7 +170,7 @@ def gameLoop():
 
         x1 += x1_change
         y1 += y1_change
-        draw_kyrgyzstan_flag()  # Draw the Kyrgyzstan flag as the background
+        draw_flag()  # Draw the selected flag as the background
         pygame.draw.rect(display, green, [foodx, foody, snake_block, snake_block])
         snake_Head = []
         snake_Head.append(x1)
@@ -186,4 +203,5 @@ def gameLoop():
     pygame.quit()
     quit()
 
-gameLoop()
+if __name__ == "__main__":
+    gameLoop()

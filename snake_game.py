@@ -4,6 +4,7 @@ import pygame
 import sys
 from dalle_integration import generate_background
 import os
+from kyrgyzstan_flag import draw_kyrgyzstan_flag
 
 # Initialize Pygame
 pygame.init()

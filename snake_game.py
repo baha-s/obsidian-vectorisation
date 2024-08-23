@@ -42,12 +42,13 @@ def draw_kazakhstan_flag():
     display.fill(sky_blue)
     
     # Draw the sun
-    pygame.draw.circle(display, gold, (width // 2, height // 4), 30)  # Sun in the center top
+    pygame.draw.circle(display, gold, (width // 2, height // 4), 40)  # Larger sun in the center top
     
     # Draw the eagle (simplified representation)
-    pygame.draw.polygon(display, gold, [(width // 2 - 20, height // 4 + 10), 
-                                         (width // 2, height // 4 + 40), 
-                                         (width // 2 + 20, height // 4 + 10)])  # Eagle wings
+    pygame.draw.polygon(display, gold, [(width // 2 - 30, height // 4 + 10), 
+                                         (width // 2, height // 4 + 60), 
+                                         (width // 2 + 30, height // 4 + 10)])  # Eagle wings
+    pygame.draw.circle(display, gold, (width // 2, height // 4 + 30), 10)  # Eagle head
 
 def our_snake(snake_block, snake_list):
     for x in snake_list:

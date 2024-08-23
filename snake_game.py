@@ -12,7 +12,8 @@ black = (0, 0, 0)
 red = (213, 50, 80)
 green = (0, 255, 0)
 blue = (50, 153, 213)
-explosion_color = (255, 255, 0)  # Yellow for explosion
+skin_color = (255, 224, 189)  # Skin tone for explosion
+nipple_color = (255, 192, 203)  # Light pink for nipples
 
 # Game settings
 width = 600
@@ -49,8 +50,11 @@ def message(msg, color):
 def explosion_effect(x, y):
     for radius in range(10, 50, 5):  # Create an expanding explosion
         # Draw two circles to resemble a pair of boobs
-        pygame.draw.circle(display, explosion_color, (int(x - radius // 2), int(y)), radius)  # Left circle
-        pygame.draw.circle(display, explosion_color, (int(x + radius // 2), int(y)), radius)  # Right circle
+        pygame.draw.circle(display, skin_color, (int(x - radius // 2), int(y)), radius)  # Left circle
+        pygame.draw.circle(display, skin_color, (int(x + radius // 2), int(y)), radius)  # Right circle
+        # Draw nipples
+        pygame.draw.circle(display, nipple_color, (int(x - radius // 2), int(y)), radius // 5)  # Left nipple
+        pygame.draw.circle(display, nipple_color, (int(x + radius // 2), int(y)), radius // 5)  # Right nipple
         pygame.display.update()
         time.sleep(0.05)  # Delay for effect
         display.fill(blue)  # Clear the screen for the next frame

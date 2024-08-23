@@ -10,14 +10,16 @@ def ask_country():
     print("Where are you from? (Enter the name of your country)")
     return input().strip().lower()
 
-country_flags = {
-    "kyrgyzstan": draw_kyrgyzstan_flag,
-    "uk": draw_union_jack,  # Assuming we keep the Union Jack function
-    # Add more countries and their corresponding flag drawing functions here
-}
-
 def select_flag(country):
     return country_flags.get(country, draw_kyrgyzstan_flag)  # Default to Kyrgyzstan flag if country not found
+
+# ... (keep all the existing code, including draw_kyrgyzstan_flag and draw_union_jack functions)
+
+# Move this dictionary after all flag drawing functions are defined
+country_flags = {
+    "kyrgyzstan": draw_kyrgyzstan_flag,
+    # Add more countries and their corresponding flag drawing functions here
+}
 
 # Colors
 white = (255, 255, 255)

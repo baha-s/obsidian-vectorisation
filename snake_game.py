@@ -135,6 +135,8 @@ def gameLoop():
             Length_of_snake += 1
             score += 1
             eat_sound.play()  # Play sound when food is eaten
+            
+            # Start explosion effect in a separate thread
             explosion_effect(foodx, foody)  # Trigger explosion effect
 
         clock.tick(snake_speed)

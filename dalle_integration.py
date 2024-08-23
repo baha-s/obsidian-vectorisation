@@ -22,8 +22,9 @@ def generate_background(prompt, output_path):
         n=1,
     )
     
-    if response.status_code != 200:
-        raise Exception("Failed to generate image: " + response.text)
+    # Check if the response contains the expected data
+    if not response.data or len(response.data) == 0:
+        raise Exception("Failed to generate image: No data returned")
 
     image_url = response.data[0].url
 

@@ -10,17 +10,6 @@ def ask_country():
     print("Where are you from? (Enter the name of your country)")
     return input().strip().lower()
 
-def select_flag(country):
-    return country_flags.get(country, draw_kyrgyzstan_flag)  # Default to Kyrgyzstan flag if country not found
-
-# ... (keep all the existing code, including draw_kyrgyzstan_flag and draw_union_jack functions)
-
-# Move this dictionary after all flag drawing functions are defined
-country_flags = {
-    "kyrgyzstan": draw_kyrgyzstan_flag,
-    # Add more countries and their corresponding flag drawing functions here
-}
-
 # Colors
 white = (255, 255, 255)
 yellow = (255, 255, 102)
@@ -33,6 +22,38 @@ gold = (255, 215, 0)  # Gold for the sun
 skin_color = (255, 224, 189)  # Skin tone for explosion
 nipple_color = (255, 192, 203)  # Light pink for nipples
 kyrgyzstan_yellow = (255, 210, 0)  # Kyrgyzstan flag yellow
+
+# Game settings
+width = 600
+height = 400
+snake_block = 10
+snake_speed = 15
+
+# Create the display
+display = pygame.display.set_mode((width, height))
+pygame.display.set_caption('Snake Game')
+
+# Clock
+clock = pygame.time.Clock()
+
+# Font styles
+font_style = pygame.font.SysFont("bahnschrift", 25)
+score_font = pygame.font.SysFont("comicsansms", 35)
+
+# Load sound
+eat_sound = pygame.mixer.Sound("eat_sound.wav")  # Ensure you have this sound file in the same directory
+
+def draw_kyrgyzstan_flag():
+    # ... (keep the existing draw_kyrgyzstan_flag function code)
+
+# Move this dictionary after all flag drawing functions are defined
+country_flags = {
+    "kyrgyzstan": draw_kyrgyzstan_flag,
+    # Add more countries and their corresponding flag drawing functions here
+}
+
+def select_flag(country):
+    return country_flags.get(country, draw_kyrgyzstan_flag)  # Default to Kyrgyzstan flag if country not found
 
 # Game settings
 width = 600

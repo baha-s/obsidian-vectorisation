@@ -16,7 +16,7 @@ def generate_background(prompt, output_path):
     # Generate an image using DALL-E
     response = client.images.generate(
         model="dall-e-3",
-        prompt=f"A minimalist background with the flag of {prompt} in a strict style as it would be printed.",
+        prompt=f"A minimalist background with the flag of {prompt} that takes up the entire space of 1024x1024 pixels in a strict style as it would be printed.",
         size="1024x1024",
         quality="standard",
         n=1,

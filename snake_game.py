@@ -12,6 +12,7 @@ black = (0, 0, 0)
 red = (213, 50, 80)
 green = (0, 255, 0)
 blue = (50, 153, 213)
+explosion_color = (255, 255, 0)  # Yellow for explosion
 
 # Game settings
 width = 600
@@ -44,6 +45,13 @@ def your_score(score):
 def message(msg, color):
     mesg = font_style.render(msg, True, color)
     display.blit(mesg, [width / 6, height / 3])
+
+def explosion_effect(x, y):
+    for radius in range(10, 50, 5):  # Create an expanding explosion
+        pygame.draw.circle(display, explosion_color, (int(x), int(y)), radius)
+        pygame.display.update()
+        time.sleep(0.05)  # Delay for effect
+        display.fill(blue)  # Clear the screen for the next frame
 
 def gameLoop():
     print("Starting game loop...")  # Debugging statement
@@ -125,6 +133,7 @@ def gameLoop():
             Length_of_snake += 1
             score += 1
             eat_sound.play()  # Play sound when food is eaten
+            explosion_effect(foodx, foody)  # Trigger explosion effect
 
         clock.tick(snake_speed)
 

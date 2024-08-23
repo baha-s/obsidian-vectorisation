@@ -48,7 +48,9 @@ def message(msg, color):
 
 def explosion_effect(x, y):
     for radius in range(10, 50, 5):  # Create an expanding explosion
-        pygame.draw.circle(display, explosion_color, (int(x), int(y)), radius)
+        # Draw two circles to resemble a pair of boobs
+        pygame.draw.circle(display, explosion_color, (int(x - radius // 2), int(y)), radius)  # Left circle
+        pygame.draw.circle(display, explosion_color, (int(x + radius // 2), int(y)), radius)  # Right circle
         pygame.display.update()
         time.sleep(0.05)  # Delay for effect
         display.fill(blue)  # Clear the screen for the next frame

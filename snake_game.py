@@ -168,6 +168,7 @@ def gameLoop():
     background_path = os.path.join("flags", "background.png")
     generate_background(f"A minimalist background with the flag of {country}", background_path)
     background = pygame.image.load(background_path).convert()
+    background = pygame.transform.scale(background, (width, height))  # Scale the background to fit the display
     select_flag(country)
 
     frame_count = 0
@@ -216,7 +217,7 @@ def gameLoop():
         # Update the snake's position
         x1 += x1_change
         y1 += y1_change
-        display.blit(background, (0, 0))
+        display.blit(background, (0, 0))  # Draw the scaled background
         pygame.draw.rect(display, green, [foodx, foody, snake_block, snake_block])  # Draw the food
         snake_Head = [x1, y1]
         snake_List.append(snake_Head)

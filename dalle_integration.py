@@ -10,7 +10,7 @@ def generate_background(prompt, output_path):
     response = client.images.generate(
         model="dall-e-3",
         prompt=prompt,
-        size="512x512",
+        size="1024x1024",
         quality="standard",
         n=1,
     )

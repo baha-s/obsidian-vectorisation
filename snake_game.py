@@ -112,7 +112,6 @@ def ask_country(background):
                 if event.key == pygame.K_DOWN:
                     dropdown_open = not dropdown_open
                 elif event.key == pygame.K_RETURN and not dropdown_open:
-                    pygame.quit()
                     return selected_country
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = event.pos

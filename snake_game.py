@@ -1,6 +1,7 @@
 import pygame
 import random
 from kyrgyzstan_flag import draw_kyrgyzstan_flag
+import pygame
 import sys
 from dalle_integration import generate_background
 import os
@@ -135,9 +136,34 @@ country_flags = {
     "kyrgyzstan": draw_kyrgyzstan_flag_wrapper,
 }
 
+def draw_usa_flag(display, width, height):
+    # Placeholder function for drawing the USA flag
+    display.fill((60, 59, 110))  # Navy blue background
+
+def draw_canada_flag(display, width, height):
+    # Placeholder function for drawing the Canada flag
+    display.fill((255, 0, 0))  # Red background
+
+def draw_germany_flag(display, width, height):
+    # Placeholder function for drawing the Germany flag
+    display.fill((0, 0, 0))  # Black background
+
+def draw_france_flag(display, width, height):
+    # Placeholder function for drawing the France flag
+    display.fill((0, 85, 164))  # Blue background
+
+# Mapping of country names to their flag drawing functions
+country_flags = {
+    "kyrgyzstan": draw_kyrgyzstan_flag_wrapper,
+    "usa": lambda: draw_usa_flag(display, width, height),
+    "canada": lambda: draw_canada_flag(display, width, height),
+    "germany": lambda: draw_germany_flag(display, width, height),
+    "france": lambda: draw_france_flag(display, width, height),
+}
+
 def select_flag(country):
     # Select the appropriate flag drawing function based on the country
-    return country_flags.get(country.lower(), draw_kyrgyzstan_flag_wrapper)
+    return country_flags.get(country.lower(), lambda: display.fill(white))
 
 def our_snake(snake_block, snake_list):
     # Draw the snake on the display

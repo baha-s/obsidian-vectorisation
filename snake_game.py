@@ -200,9 +200,9 @@ def gameLoop():
     display = pygame.display.set_mode((width, height))
     pygame.display.set_caption('Snake Game')
     background_path = os.path.join("flags", "background.png")
-    generate_background(f"A colorful abstract background for {country}", background_path)
+    generate_background(f"A colorful abstract background with the flag of {country}", background_path)
     background = pygame.image.load(background_path).convert()
-    draw_flag = select_flag(country)
+    select_flag(country)
 
     frame_count = 0
 
@@ -251,7 +251,6 @@ def gameLoop():
         x1 += x1_change
         y1 += y1_change
         display.blit(background, (0, 0))
-        draw_flag()  # Draw the selected country's flag
         pygame.draw.rect(display, green, [foodx, foody, snake_block, snake_block])  # Draw the food
         snake_Head = [x1, y1]
         snake_List.append(snake_Head)

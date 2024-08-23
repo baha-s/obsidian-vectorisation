@@ -7,10 +7,9 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 
 def generate_background(prompt, output_path):
     # Generate an image using DALL-E
-    response = openai.Image.create(
-        prompt=prompt,
-        n=1,
-        size="512x512"
+    response = openai.Image.create_variation(
+        image=openai.Image.create(prompt=prompt, size="512x512"),
+        n=1
     )
     image_url = response['data'][0]['url']
 

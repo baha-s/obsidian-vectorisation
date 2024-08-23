@@ -16,16 +16,6 @@ red = (213, 50, 80)
 green = (0, 255, 0)
 blue = (50, 153, 213)
 
-# Define the colors for the gay pride flag
-pride_colors = [
-    (255, 0, 0),    # Red
-    (255, 127, 0),  # Orange
-    (255, 255, 0),  # Yellow
-    (0, 255, 0),    # Green
-    (0, 0, 255),    # Blue
-    (75, 0, 130)    # Purple
-]
-
 # Game settings
 width = 600
 height = 400
@@ -46,27 +36,6 @@ clock = pygame.time.Clock()
 font_style = pygame.font.SysFont("bahnschrift", 25)
 score_font = pygame.font.SysFont("comicsansms", 35)
 
-def draw_dropdown(countries, selected_country, dropdown_open):
-    # Draw the dropdown menu for country selection
-    dropdown_rect = pygame.Rect(width / 4, height / 3, width / 2, 30)
-    pygame.draw.rect(display, black, dropdown_rect)
-    font = pygame.font.SysFont("bahnschrift", 20)
-    text = font.render(selected_country, True, white)
-    display.blit(text, (dropdown_rect.x + 5, dropdown_rect.y + 5))
-
-    # If the dropdown is open, draw the list of countries
-    if dropdown_open:
-        for i, country in enumerate(countries):
-            item_rect = pygame.Rect(width / 4, height / 3 + 30 * (i), width / 2, 30)
-            if country == selected_country:
-                # Highlight selected country with pride colors
-                for j, color in enumerate(pride_colors):
-                    pygame.draw.rect(display, color, item_rect.move(0, j * (item_rect.height // len(pride_colors))), item_rect.width, item_rect.height // len(pride_colors))
-            else:
-                pygame.draw.rect(display, blue, item_rect)
-            item_text = font.render(country, True, white)
-            display.blit(item_text, (item_rect.x + 5, item_rect.y + 5))
-
 def ask_country(background):
     width, height = 600, 400
     display = pygame.display.set_mode((width, height))
@@ -78,30 +47,27 @@ def ask_country(background):
 
     # List of countries
     countries = ["Kyrgyzstan", "USA", "Canada", "Germany", "France"]
-    selected_country = countries[0]
+    input_text = ""
+    suggestions = []
     dropdown_open = False
 
-    def draw_dropdown(countries, selected_country, dropdown_open):
-        dropdown_rect = pygame.Rect(width / 4, height / 3, width / 2, 30)
-        pygame.draw.rect(display, black, dropdown_rect, 2)
-        display.fill(white, dropdown_rect)
-        
-        # Draw selected country
-        text_surface = font.render(selected_country, True, black)
-        display.blit(text_surface, (dropdown_rect.x + 5, dropdown_rect.y + 5))
-        
-        if dropdown_open:
-            # Draw dropdown items
-            for i, country in enumerate(countries):
-                item_rect = pygame.Rect(dropdown_rect.x, dropdown_rect.y + 30 * (i + 1), dropdown_rect.width, 30)
+    def draw_input_box():
+        input_rect = pygame.Rect(width / 4, height / 3, width / 2, 30)
+        pygame.draw.rect(display, black, input_rect, 2)
+        text_surface = font.render(input_text, True, black)
+        display.blit(text_surface, (input_rect.x + 5, input_rect.y + 5))
+
+        if dropdown_open and suggestions:
+            for i, suggestion in enumerate(suggestions):
+                item_rect = pygame.Rect(input_rect.x, input_rect.y + 30 * (i + 1), input_rect.width, 30)
                 pygame.draw.rect(display, grey, item_rect)
-                item_surface = font.render(country, True, black)
+                item_surface = font.render(suggestion, True, black)
                 display.blit(item_surface, (item_rect.x + 5, item_rect.y + 5))
 
     # Main loop
     while True:
         display.blit(background, (0, 0))
-        draw_dropdown(countries, selected_country, dropdown_open)
+        draw_input_box()
         pygame.display.update()
 
         for event in pygame.event.get():
@@ -109,25 +75,20 @@ def ask_country(background):
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_DOWN:
-                    dropdown_open = not dropdown_open
-                elif event.key == pygame.K_RETURN and not dropdown_open:
-                    return selected_country
-                elif event.key == pygame.K_ESCAPE:  # Allow exiting the dropdown with ESC
-                    dropdown_open = False
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                mouse_pos = event.pos
-                dropdown_rect = pygame.Rect(width / 4, height / 3, width / 2, 30)
-                if dropdown_open:
-                    for i, country in enumerate(countries):
-                        item_rect = pygame.Rect(dropdown_rect.x, dropdown_rect.y + 30 * (i + 1), dropdown_rect.width, 30)
-                        if item_rect.collidepoint(mouse_pos):
-                            selected_country = country
-                            dropdown_open = False
-                            break
-                elif dropdown_rect.collidepoint(mouse_pos):
-                    dropdown_open = True
+                if event.key == pygame.K_RETURN:
+                    if input_text in countries:
+                        return input_text
+                elif event.key == pygame.K_ESCAPE:  # Allow exiting the input with ESC
+                    pygame.quit()
+                    sys.exit()
+                elif event.key == pygame.K_BACKSPACE:
+                    input_text = input_text[:-1]
+                else:
+                    input_text += event.unicode
 
+                # Update suggestions based on input
+                suggestions = [country for country in countries if input_text.lower() in country.lower()]
+                dropdown_open = True
 
 def select_flag(country):
     # Select the appropriate flag drawing function based on the country

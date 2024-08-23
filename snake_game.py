@@ -12,6 +12,8 @@ black = (0, 0, 0)
 red = (213, 50, 80)
 green = (0, 255, 0)
 blue = (50, 153, 213)
+sky_blue = (0, 191, 255)  # Sky blue for the flag
+gold = (255, 215, 0)  # Gold for the sun and eagle
 skin_color = (255, 224, 189)  # Skin tone for explosion
 nipple_color = (255, 192, 203)  # Light pink for nipples
 
@@ -35,6 +37,18 @@ score_font = pygame.font.SysFont("comicsansms", 35)
 # Load sound
 eat_sound = pygame.mixer.Sound("eat_sound.wav")  # Ensure you have this sound file in the same directory
 
+def draw_kazakhstan_flag():
+    # Draw the sky blue background
+    display.fill(sky_blue)
+    
+    # Draw the sun
+    pygame.draw.circle(display, gold, (width // 2, height // 4), 30)  # Sun in the center top
+    
+    # Draw the eagle (simplified representation)
+    pygame.draw.polygon(display, gold, [(width // 2 - 20, height // 4 + 10), 
+                                         (width // 2, height // 4 + 40), 
+                                         (width // 2 + 20, height // 4 + 10)])  # Eagle wings
+
 def our_snake(snake_block, snake_list):
     for x in snake_list:
         pygame.draw.rect(display, black, [x[0], x[1], snake_block, snake_block])
@@ -57,7 +71,7 @@ def explosion_effect(x, y):
         pygame.draw.circle(display, nipple_color, (int(x + radius // 2), int(y)), radius // 5)  # Right nipple
         pygame.display.update()
         time.sleep(0.05)  # Delay for effect
-        display.fill(blue)  # Clear the screen for the next frame
+        draw_kazakhstan_flag()  # Redraw the flag to clear the explosion effect
 
 def gameLoop():
     print("Starting game loop...")  # Debugging statement
@@ -115,7 +129,7 @@ def gameLoop():
 
         x1 += x1_change
         y1 += y1_change
-        display.fill(blue)
+        draw_kazakhstan_flag()  # Draw the flag as the background
         pygame.draw.rect(display, green, [foodx, foody, snake_block, snake_block])
         snake_Head = []
         snake_Head.append(x1)

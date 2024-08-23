@@ -1,6 +1,5 @@
 import pygame
 import random
-from kyrgyzstan_flag import draw_kyrgyzstan_flag
 import pygame
 import sys
 from dalle_integration import generate_background
@@ -127,43 +126,13 @@ def ask_country(background):
                 elif dropdown_rect.collidepoint(mouse_pos):
                     dropdown_open = True
 
-def draw_kyrgyzstan_flag_wrapper():
-    # Wrapper function to draw the Kyrgyzstan flag
-    draw_kyrgyzstan_flag(display, width, height)
-
-# Mapping of country names to their flag drawing functions
-country_flags = {
-    "kyrgyzstan": draw_kyrgyzstan_flag_wrapper,
-}
-
-def draw_usa_flag(display, width, height):
-    # Placeholder function for drawing the USA flag
-    display.fill((60, 59, 110))  # Navy blue background
-
-def draw_canada_flag(display, width, height):
-    # Placeholder function for drawing the Canada flag
-    display.fill((255, 0, 0))  # Red background
-
-def draw_germany_flag(display, width, height):
-    # Placeholder function for drawing the Germany flag
-    display.fill((0, 0, 0))  # Black background
-
-def draw_france_flag(display, width, height):
-    # Placeholder function for drawing the France flag
-    display.fill((0, 85, 164))  # Blue background
-
-# Mapping of country names to their flag drawing functions
-country_flags = {
-    "kyrgyzstan": draw_kyrgyzstan_flag_wrapper,
-    "usa": lambda: draw_usa_flag(display, width, height),
-    "canada": lambda: draw_canada_flag(display, width, height),
-    "germany": lambda: draw_germany_flag(display, width, height),
-    "france": lambda: draw_france_flag(display, width, height),
-}
 
 def select_flag(country):
     # Select the appropriate flag drawing function based on the country
-    return country_flags.get(country.lower(), lambda: display.fill(white))
+    if country.lower() == "kyrgyzstan":
+        draw_kyrgyzstan_flag(display, width, height)
+    else:
+        display.fill(white)  # Default background if no specific flag is available
 
 def our_snake(snake_block, snake_list):
     # Draw the snake on the display

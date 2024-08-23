@@ -38,8 +38,8 @@ score_font = pygame.font.SysFont("comicsansms", 35)
 eat_sound = pygame.mixer.Sound("eat_sound.wav")  # Ensure you have this sound file in the same directory
 
 def draw_union_jack():
-    # Draw the background
-    display.fill(white)
+    # Draw the blue background for the flag
+    display.fill(blue)
 
     # Draw the red cross
     pygame.draw.rect(display, red, [0, height // 3, width, height // 6])  # Horizontal
@@ -49,14 +49,17 @@ def draw_union_jack():
     pygame.draw.rect(display, white, [0, height // 3 - 10, width, height // 6 + 20])  # Horizontal
     pygame.draw.rect(display, white, [width // 3 - 10, 0, width // 6 + 20, height])  # Vertical
 
-    # Draw the blue background for the flag
-    pygame.draw.rect(display, blue, [0, 0, width, height])
-
     # Draw the diagonal red crosses
     pygame.draw.polygon(display, red, [(0, 0), (width // 3, height // 3), (0, height // 3)], 0)
     pygame.draw.polygon(display, red, [(width, 0), (width - width // 3, height // 3), (width, height // 3)], 0)
     pygame.draw.polygon(display, red, [(0, height), (width // 3, height - height // 3), (0, height - height // 3)], 0)
     pygame.draw.polygon(display, red, [(width, height), (width - width // 3, height - height // 3), (width, height - height // 3)], 0)
+
+    # Draw the white diagonal crosses
+    pygame.draw.polygon(display, white, [(0, 0), (width // 3, height // 3 - 10), (0, height // 3 + 10)], 0)
+    pygame.draw.polygon(display, white, [(width, 0), (width - width // 3, height // 3 - 10), (width, height // 3 + 10)], 0)
+    pygame.draw.polygon(display, white, [(0, height), (width // 3, height - height // 3 + 10), (0, height - height // 3 - 10)], 0)
+    pygame.draw.polygon(display, white, [(width, height), (width - width // 3, height - height // 3 + 10), (width, height - height // 3 - 10)], 0)
 
 def our_snake(snake_block, snake_list):
     for x in snake_list:

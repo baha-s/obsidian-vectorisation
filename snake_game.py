@@ -3,6 +3,8 @@ import random
 from kyrgyzstan_flag import draw_kyrgyzstan_flag
 import sys
 from hello import hello
+from dalle_integration import generate_background
+import os
 
 # Initialize Pygame
 pygame.init()
@@ -30,6 +32,9 @@ width = 600
 height = 400
 snake_block = 10
 snake_speed = 15
+
+# Ensure the flags directory exists
+os.makedirs("flags", exist_ok=True)
 
 # Create the display window for the game
 display = pygame.display.set_mode((width, height))
@@ -98,7 +103,7 @@ def ask_country():
 
     # Main loop
     while True:
-        display.fill(white)
+        display.blit(background, (0, 0))
         draw_dropdown(countries, selected_country, dropdown_open)
         pygame.display.update()
 
@@ -168,7 +173,10 @@ def gameLoop():
     foodx = round(random.randrange(0, width - snake_block) / 10.0) * 10.0
     foody = round(random.randrange(0, height - snake_block) / 10.0) * 10.0
 
-    # Ask user to select a country and get the corresponding flag drawing function
+    # Generate a background using DALL-E
+    background_path = os.path.join("flags", "background.png")
+    generate_background("A colorful abstract background for a snake game", background_path)
+    background = pygame.image.load(background_path)
     country = ask_country()
     draw_flag = select_flag(country)
 

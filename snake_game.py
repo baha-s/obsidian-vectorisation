@@ -68,7 +68,7 @@ def draw_dropdown(countries, selected_country, dropdown_open):
             item_text = font.render(country, True, white)
             display.blit(item_text, (item_rect.x + 5, item_rect.y + 5))
 
-def ask_country():
+def ask_country(background):
     # Initialize Pygame
     pygame.init()
     width, height = 800, 600
@@ -177,7 +177,7 @@ def gameLoop():
     background_path = os.path.join("flags", "background.png")
     generate_background("A colorful abstract background for a snake game", background_path)
     background = pygame.image.load(background_path).convert()
-    country = ask_country()
+    country = ask_country(background)
     draw_flag = select_flag(country)
 
     frame_count = 0

@@ -21,7 +21,7 @@ def generate_background(prompt, output_path):
         quality="standard",
         n=1,
     )
-    image_url = response.data[0]['url']
+    image_url = response.data[0].url
 
     # Download the image and save it to the specified path
     image_data = requests.get(image_url).content

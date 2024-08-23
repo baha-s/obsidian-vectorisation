@@ -176,7 +176,7 @@ def gameLoop():
     # Generate a background using DALL-E
     background_path = os.path.join("flags", "background.png")
     generate_background("A colorful abstract background for a snake game", background_path)
-    background = pygame.image.load(background_path)
+    background = pygame.image.load(background_path).convert()
     country = ask_country()
     draw_flag = select_flag(country)
 

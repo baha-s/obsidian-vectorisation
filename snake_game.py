@@ -113,6 +113,8 @@ def ask_country(background):
                     dropdown_open = not dropdown_open
                 elif event.key == pygame.K_RETURN and not dropdown_open:
                     return selected_country
+                elif event.key == pygame.K_ESCAPE:  # Allow exiting the dropdown with ESC
+                    dropdown_open = False
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = event.pos
                 dropdown_rect = pygame.Rect(width / 4, height / 3, width / 2, 30)

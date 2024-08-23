@@ -21,6 +21,10 @@ def generate_background(prompt, output_path):
         quality="standard",
         n=1,
     )
+    
+    if response.status_code != 200:
+        raise Exception("Failed to generate image: " + response.text)
+
     image_url = response.data[0].url
 
     # Download the image and save it to the specified path

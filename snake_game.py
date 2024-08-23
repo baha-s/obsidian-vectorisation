@@ -15,6 +15,7 @@ black = (0, 0, 0)
 red = (213, 50, 80)
 green = (0, 255, 0)
 blue = (50, 153, 213)
+light_blue = (173, 216, 230)  # Light blue for the background
 
 # Game settings
 width = 600
@@ -53,8 +54,8 @@ def ask_country(background):
 
     def draw_input_box():
         input_rect = pygame.Rect(width / 4, height / 3, width / 2, 30)
-        pygame.draw.rect(display, black, input_rect, 2)
-        text_surface = font.render(input_text, True, black)
+        pygame.draw.rect(display, white, input_rect, 2)  # Change input box color to white
+        text_surface = font.render(input_text, True, black)  # Change text color to black
         display.blit(text_surface, (input_rect.x + 5, input_rect.y + 5))
 
         if dropdown_open and suggestions:
@@ -66,7 +67,7 @@ def ask_country(background):
 
     # Main loop
     while True:
-        display.blit(background, (0, 0))
+        display.fill(light_blue)  # Change background color to light blue
         draw_input_box()
         pygame.display.update()
 

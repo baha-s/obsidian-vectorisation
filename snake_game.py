@@ -2,7 +2,6 @@ import pygame
 import random
 from kyrgyzstan_flag import draw_kyrgyzstan_flag
 import sys
-from hello import hello
 from dalle_integration import generate_background
 import os
 

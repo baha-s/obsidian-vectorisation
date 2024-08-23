@@ -43,8 +43,10 @@ score_font = pygame.font.SysFont("comicsansms", 35)
 # Load sound
 eat_sound = pygame.mixer.Sound("eat_sound.wav")  # Ensure you have this sound file in the same directory
 
-def draw_kyrgyzstan_flag():
-    # ... (keep the existing draw_kyrgyzstan_flag function code)
+from kyrgyzstan_flag import draw_kyrgyzstan_flag
+
+def draw_kyrgyzstan_flag_wrapper():
+    draw_kyrgyzstan_flag(display, width, height)
 
 # Move this dictionary after all flag drawing functions are defined
 country_flags = {

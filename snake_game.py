@@ -68,8 +68,6 @@ def draw_dropdown(countries, selected_country, dropdown_open):
             display.blit(item_text, (item_rect.x + 5, item_rect.y + 5))
 
 def ask_country(background):
-    # Initialize Pygame
-    pygame.init()
     width, height = 800, 600
     display = pygame.display.set_mode((width, height))
     pygame.display.set_caption('Select Country')

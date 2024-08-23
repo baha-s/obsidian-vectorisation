@@ -1,6 +1,5 @@
 import pygame
 import random
-import pygame
 import sys
 from dalle_integration import generate_background
 import os
@@ -46,8 +45,6 @@ def ask_country(background):
     black = (0, 0, 0)
     grey = (200, 200, 200)
 
-    # List of countries
-    countries = ["Kyrgyzstan", "USA", "Canada", "Germany", "France"]
     input_text = ""
     suggestions = []
     dropdown_open = False
@@ -77,8 +74,7 @@ def ask_country(background):
                 sys.exit()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
-                    if input_text in countries:
-                        return input_text
+                    return input_text  # Return the input text directly
                 elif event.key == pygame.K_ESCAPE:  # Allow exiting the input with ESC
                     pygame.quit()
                     sys.exit()
@@ -88,7 +84,7 @@ def ask_country(background):
                     input_text += event.unicode
 
                 # Update suggestions based on input
-                suggestions = [country for country in countries if input_text.lower() in country.lower()]
+                suggestions = []  # No suggestions needed
                 dropdown_open = True
 
 def select_flag(country):

@@ -30,9 +30,16 @@ clock = pygame.time.Clock()
 font_style = pygame.font.SysFont("bahnschrift", 25)
 score_font = pygame.font.SysFont("comicsansms", 35)
 
+# Load sound
+eat_sound = pygame.mixer.Sound("eat_sound.wav")  # Ensure you have this sound file in the same directory
+
 def our_snake(snake_block, snake_list):
     for x in snake_list:
         pygame.draw.rect(display, black, [x[0], x[1], snake_block, snake_block])
+
+def your_score(score):
+    value = score_font.render("Score: " + str(score), True, white)
+    display.blit(value, [0, 0])
 
 def message(msg, color):
     mesg = font_style.render(msg, True, color)
@@ -50,6 +57,7 @@ def gameLoop():
 
     snake_List = []
     Length_of_snake = 1
+    score = 0
 
     foodx = round(random.randrange(0, width - snake_block) / 10.0) * 10.0
     foody = round(random.randrange(0, height - snake_block) / 10.0) * 10.0
@@ -105,6 +113,7 @@ def gameLoop():
                 game_close = True
 
         our_snake(snake_block, snake_List)
+        your_score(score)
 
         pygame.display.update()
 
@@ -112,6 +121,8 @@ def gameLoop():
             foodx = round(random.randrange(0, width - snake_block) / 10.0) * 10.0
             foody = round(random.randrange(0, height - snake_block) / 10.0) * 10.0
             Length_of_snake += 1
+            score += 1
+            eat_sound.play()  # Play sound when food is eaten
 
         clock.tick(snake_speed)
 

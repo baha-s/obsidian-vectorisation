@@ -4,7 +4,6 @@ import pygame
 import sys
 from dalle_integration import generate_background
 import os
-from kyrgyzstan_flag import draw_kyrgyzstan_flag
 
 # Initialize Pygame
 pygame.init()
@@ -130,10 +129,7 @@ def ask_country(background):
 
 def select_flag(country):
     # Select the appropriate flag drawing function based on the country
-    if country.lower() == "kyrgyzstan":
-        draw_kyrgyzstan_flag(display, width, height)
-    else:
-        display.fill(white)  # Default background if no specific flag is available
+    display.fill(white)  # Default background if no specific flag is available
 
 def our_snake(snake_block, snake_list):
     # Draw the snake on the display

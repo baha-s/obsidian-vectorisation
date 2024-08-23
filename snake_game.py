@@ -1,6 +1,7 @@
 import pygame
 import random
 from kyrgyzstan_flag import draw_kyrgyzstan_flag
+import sys
 
 # Initialize Pygame
 pygame.init()
@@ -71,14 +72,21 @@ def gameLoop():
     country = ask_country()
     draw_flag = select_flag(country)
 
-    while not game_over:
+    frame_count = 0
 
-        while game_close == True:
+    while not game_over:
+        frame_count += 1
+        print(f"Frame: {frame_count}, Snake position: ({x1}, {y1}), Food position: ({foodx}, {foody})")
+
+        while game_close:
             display.fill(blue)
             message("You Lost! Press C-Play Again or Q-Quit", red)
             pygame.display.update()
 
             for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    game_over = True
+                    game_close = False
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_q:
                         game_over = True
@@ -111,9 +119,7 @@ def gameLoop():
         display.fill(white)
         draw_flag()
         pygame.draw.rect(display, green, [foodx, foody, snake_block, snake_block])
-        snake_Head = []
-        snake_Head.append(x1)
-        snake_Head.append(y1)
+        snake_Head = [x1, y1]
         snake_List.append(snake_Head)
         if len(snake_List) > Length_of_snake:
             del snake_List[0]
@@ -127,6 +133,7 @@ def gameLoop():
         pygame.display.update()
 
         if x1 == foodx and y1 == foody:
+            print("Food eaten!")
             foodx = round(random.randrange(0, width - snake_block) / 10.0) * 10.0
             foody = round(random.randrange(0, height - snake_block) / 10.0) * 10.0
             Length_of_snake += 1
@@ -134,7 +141,7 @@ def gameLoop():
         clock.tick(snake_speed)
 
     pygame.quit()
-    quit()
+    sys.exit()
 
 if __name__ == "__main__":
     gameLoop()

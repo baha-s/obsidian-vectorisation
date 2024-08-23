@@ -1,2 +1,7 @@
 .aider*
 .env
+# Ignore Python bytecode cache directories
+__pycache__/
+
+# Ignore flags directory
+flags/

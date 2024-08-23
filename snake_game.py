@@ -172,6 +172,8 @@ def gameLoop():
 
     # Select the country and generate a background using DALL-E
     country = ask_country(pygame.Surface((width, height)))
+    display = pygame.display.set_mode((width, height))
+    pygame.display.set_caption('Snake Game')
     background_path = os.path.join("flags", "background.png")
     generate_background(f"A colorful abstract background for {country}", background_path)
     background = pygame.image.load(background_path).convert()

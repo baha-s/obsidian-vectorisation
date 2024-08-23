@@ -31,9 +31,47 @@ clock = pygame.time.Clock()
 font_style = pygame.font.SysFont("bahnschrift", 25)
 score_font = pygame.font.SysFont("comicsansms", 35)
 
+def draw_dropdown(countries, selected_country):
+    dropdown_rect = pygame.Rect(width / 4, height / 3, width / 2, 30)
+    pygame.draw.rect(display, black, dropdown_rect)
+    font = pygame.font.SysFont("bahnschrift", 20)
+    text = font.render(selected_country, True, white)
+    display.blit(text, (dropdown_rect.x + 5, dropdown_rect.y + 5))
+
+    for i, country in enumerate(countries):
+        if i == 0:
+            continue  # Skip the first item as it's the selected one
+        item_rect = pygame.Rect(width / 4, height / 3 + 30 * i, width / 2, 30)
+        pygame.draw.rect(display, blue, item_rect)
+        item_text = font.render(country, True, white)
+        display.blit(item_text, (item_rect.x + 5, item_rect.y + 5))
+
 def ask_country():
-    print("Where are you from? (Enter the name of your country)")
-    return input().strip().lower()
+    countries = ["Kyrgyzstan", "USA", "Canada", "Germany", "France"]
+    selected_country = countries[0]
+    dropdown_open = False
+
+    while True:
+        display.fill(white)
+        draw_dropdown(countries, selected_country)
+        pygame.display.update()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_DOWN:
+                    dropdown_open = True
+                if event.key == pygame.K_RETURN:
+                    return selected_country
+            if dropdown_open and event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos = event.pos
+                for i, country in enumerate(countries):
+                    item_rect = pygame.Rect(width / 4, height / 3 + 30 * i, width / 2, 30)
+                    if item_rect.collidepoint(mouse_pos):
+                        selected_country = country
+                        dropdown_open = False
 
 def draw_kyrgyzstan_flag_wrapper():
     draw_kyrgyzstan_flag(display, width, height)
@@ -43,7 +81,7 @@ country_flags = {
 }
 
 def select_flag(country):
-    return country_flags.get(country, draw_kyrgyzstan_flag_wrapper)
+    return country_flags.get(country.lower(), draw_kyrgyzstan_flag_wrapper)
 
 def our_snake(snake_block, snake_list):
     for x in snake_list:

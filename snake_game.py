@@ -64,14 +64,17 @@ def ask_country():
                     dropdown_open = not dropdown_open
                 if event.key == pygame.K_RETURN and not dropdown_open:
                     return selected_country
-            if dropdown_open and event.type == pygame.MOUSEBUTTONDOWN:
+            if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = event.pos
-                for i, country in enumerate(countries):
-                    item_rect = pygame.Rect(width / 4, height / 3 + 30 * (i + 1), width / 2, 30)
-                    if item_rect.collidepoint(mouse_pos):
-                        selected_country = country
-                        dropdown_open = False
-                        break
+                if dropdown_open:
+                    for i, country in enumerate(countries):
+                        item_rect = pygame.Rect(width / 4, height / 3 + 30 * (i + 1), width / 2, 30)
+                        if item_rect.collidepoint(mouse_pos):
+                            selected_country = country
+                            dropdown_open = False
+                            break
+                else:
+                    dropdown_open = True  # Open dropdown if clicked outside
 
 def draw_kyrgyzstan_flag_wrapper():
     draw_kyrgyzstan_flag(display, width, height)

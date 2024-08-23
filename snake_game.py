@@ -46,6 +46,7 @@ def message(msg, color):
     display.blit(mesg, [width / 6, height / 3])
 
 def gameLoop():
+    print("Starting game loop...")  # Debugging statement
     game_over = False
     game_close = False
 
@@ -63,6 +64,7 @@ def gameLoop():
     foody = round(random.randrange(0, height - snake_block) / 10.0) * 10.0
 
     while not game_over:
+        print("Game loop iteration...")  # Debugging statement
 
         while game_close == True:
             display.fill(blue)

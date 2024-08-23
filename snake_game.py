@@ -12,8 +12,8 @@ black = (0, 0, 0)
 red = (213, 50, 80)
 green = (0, 255, 0)
 blue = (50, 153, 213)
-sky_blue = (0, 191, 255)  # Sky blue for the flag
-gold = (255, 215, 0)  # Gold for the sun and eagle
+sky_blue = (0, 191, 255)  # Sky blue for the background
+gold = (255, 215, 0)  # Gold for the sun
 skin_color = (255, 224, 189)  # Skin tone for explosion
 nipple_color = (255, 192, 203)  # Light pink for nipples
 
@@ -37,18 +37,26 @@ score_font = pygame.font.SysFont("comicsansms", 35)
 # Load sound
 eat_sound = pygame.mixer.Sound("eat_sound.wav")  # Ensure you have this sound file in the same directory
 
-def draw_kazakhstan_flag():
-    # Draw the sky blue background
-    display.fill(sky_blue)
-    
-    # Draw the sun
-    pygame.draw.circle(display, gold, (width // 2, height // 4), 40)  # Larger sun in the center top
-    
-    # Draw the eagle (simplified representation)
-    pygame.draw.polygon(display, gold, [(width // 2 - 30, height // 4 + 10), 
-                                         (width // 2, height // 4 + 60), 
-                                         (width // 2 + 30, height // 4 + 10)])  # Eagle wings
-    pygame.draw.circle(display, gold, (width // 2, height // 4 + 30), 10)  # Eagle head
+def draw_union_jack():
+    # Draw the background
+    display.fill(white)
+
+    # Draw the red cross
+    pygame.draw.rect(display, red, [0, height // 3, width, height // 6])  # Horizontal
+    pygame.draw.rect(display, red, [width // 3, 0, width // 6, height])  # Vertical
+
+    # Draw the white cross
+    pygame.draw.rect(display, white, [0, height // 3 - 10, width, height // 6 + 20])  # Horizontal
+    pygame.draw.rect(display, white, [width // 3 - 10, 0, width // 6 + 20, height])  # Vertical
+
+    # Draw the blue background for the flag
+    pygame.draw.rect(display, blue, [0, 0, width, height])
+
+    # Draw the diagonal red crosses
+    pygame.draw.polygon(display, red, [(0, 0), (width // 3, height // 3), (0, height // 3)], 0)
+    pygame.draw.polygon(display, red, [(width, 0), (width - width // 3, height // 3), (width, height // 3)], 0)
+    pygame.draw.polygon(display, red, [(0, height), (width // 3, height - height // 3), (0, height - height // 3)], 0)
+    pygame.draw.polygon(display, red, [(width, height), (width - width // 3, height - height // 3), (width, height - height // 3)], 0)
 
 def our_snake(snake_block, snake_list):
     for x in snake_list:
@@ -72,7 +80,7 @@ def explosion_effect(x, y):
         pygame.draw.circle(display, nipple_color, (int(x + radius // 2), int(y)), radius // 5)  # Right nipple
         pygame.display.update()
         time.sleep(0.05)  # Delay for effect
-        draw_kazakhstan_flag()  # Redraw the flag to clear the explosion effect
+        draw_union_jack()  # Redraw the flag to clear the explosion effect
 
 def gameLoop():
     print("Starting game loop...")  # Debugging statement
@@ -130,7 +138,7 @@ def gameLoop():
 
         x1 += x1_change
         y1 += y1_change
-        draw_kazakhstan_flag()  # Draw the flag as the background
+        draw_union_jack()  # Draw the flag as the background
         pygame.draw.rect(display, green, [foodx, foody, snake_block, snake_block])
         snake_Head = []
         snake_Head.append(x1)

@@ -2,6 +2,7 @@ import pygame
 import random
 from kyrgyzstan_flag import draw_kyrgyzstan_flag
 import sys
+from hello import hello
 
 # Initialize Pygame
 pygame.init()

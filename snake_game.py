@@ -54,7 +54,7 @@ def draw_dropdown(countries, selected_country, dropdown_open):
             if country == selected_country:
                 # Highlight selected country with pride colors
                 for j, color in enumerate(pride_colors):
-                    pygame.draw.rect(display, color, item_rect.move(0, j * (item_rect.height // len(pride_colors))), item_rect.size)
+                    pygame.draw.rect(display, color, item_rect.move(0, j * (item_rect.height // len(pride_colors))), item_rect.width, item_rect.height // len(pride_colors))
             else:
                 pygame.draw.rect(display, blue, item_rect)
             item_text = font.render(country, True, white)

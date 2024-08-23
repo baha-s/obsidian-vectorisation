@@ -9,9 +9,9 @@ pygame.init()
 white = (255, 255, 255)
 yellow = (255, 255, 102)
 black = (0, 0, 0)
-red = (213, 50, 80)
+red = (204, 0, 0)  # Union Jack red
 green = (0, 255, 0)
-blue = (50, 153, 213)
+blue = (0, 0, 102)  # Union Jack blue
 sky_blue = (0, 191, 255)  # Sky blue for the background
 gold = (255, 215, 0)  # Gold for the sun
 skin_color = (255, 224, 189)  # Skin tone for explosion
@@ -38,28 +38,33 @@ score_font = pygame.font.SysFont("comicsansms", 35)
 eat_sound = pygame.mixer.Sound("eat_sound.wav")  # Ensure you have this sound file in the same directory
 
 def draw_union_jack():
-    # Draw the blue background for the flag
+    # Set flag dimensions (3:5 ratio)
+    flag_width = width
+    flag_height = int(flag_width * 3 / 5)
+    offset_y = (height - flag_height) // 2
+
+    # Draw the blue background
     display.fill(blue)
 
-    # Draw the red cross
-    pygame.draw.rect(display, red, [0, height // 3, width, height // 6])  # Horizontal
-    pygame.draw.rect(display, red, [width // 3, 0, width // 6, height])  # Vertical
+    # Draw the white diagonals
+    diagonal_width = flag_height // 6
+    pygame.draw.polygon(display, white, [(0, offset_y), (diagonal_width, offset_y), (flag_width, flag_height + offset_y - diagonal_width), (flag_width, flag_height + offset_y)])
+    pygame.draw.polygon(display, white, [(0, flag_height + offset_y), (diagonal_width, flag_height + offset_y), (flag_width, offset_y + diagonal_width), (flag_width, offset_y)])
+
+    # Draw the red diagonals
+    red_diagonal_width = flag_height // 10
+    pygame.draw.polygon(display, red, [(0, offset_y), (red_diagonal_width, offset_y), (flag_width, flag_height + offset_y - red_diagonal_width), (flag_width, flag_height + offset_y)])
+    pygame.draw.polygon(display, red, [(0, flag_height + offset_y), (red_diagonal_width, flag_height + offset_y), (flag_width, offset_y + red_diagonal_width), (flag_width, offset_y)])
 
     # Draw the white cross
-    pygame.draw.rect(display, white, [0, height // 3 - 10, width, height // 6 + 20])  # Horizontal
-    pygame.draw.rect(display, white, [width // 3 - 10, 0, width // 6 + 20, height])  # Vertical
+    cross_width = flag_height // 3
+    pygame.draw.rect(display, white, [0, offset_y + (flag_height - cross_width) // 2, flag_width, cross_width])
+    pygame.draw.rect(display, white, [(flag_width - cross_width) // 2, offset_y, cross_width, flag_height])
 
-    # Draw the diagonal red crosses
-    pygame.draw.polygon(display, red, [(0, 0), (width // 3, height // 3), (0, height // 3)], 0)
-    pygame.draw.polygon(display, red, [(width, 0), (width - width // 3, height // 3), (width, height // 3)], 0)
-    pygame.draw.polygon(display, red, [(0, height), (width // 3, height - height // 3), (0, height - height // 3)], 0)
-    pygame.draw.polygon(display, red, [(width, height), (width - width // 3, height - height // 3), (width, height - height // 3)], 0)
-
-    # Draw the white diagonal crosses
-    pygame.draw.polygon(display, white, [(0, 0), (width // 3, height // 3 - 10), (0, height // 3 + 10)], 0)
-    pygame.draw.polygon(display, white, [(width, 0), (width - width // 3, height // 3 - 10), (width, height // 3 + 10)], 0)
-    pygame.draw.polygon(display, white, [(0, height), (width // 3, height - height // 3 + 10), (0, height - height // 3 - 10)], 0)
-    pygame.draw.polygon(display, white, [(width, height), (width - width // 3, height - height // 3 + 10), (width, height - height // 3 - 10)], 0)
+    # Draw the red cross
+    red_cross_width = flag_height // 5
+    pygame.draw.rect(display, red, [0, offset_y + (flag_height - red_cross_width) // 2, flag_width, red_cross_width])
+    pygame.draw.rect(display, red, [(flag_width - red_cross_width) // 2, offset_y, red_cross_width, flag_height])
 
 def our_snake(snake_block, snake_list):
     for x in snake_list:

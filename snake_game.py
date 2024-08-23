@@ -14,6 +14,16 @@ red = (213, 50, 80)
 green = (0, 255, 0)
 blue = (50, 153, 213)
 
+# Gay pride colors
+pride_colors = [
+    (255, 0, 0),    # Red
+    (255, 127, 0),  # Orange
+    (255, 255, 0),  # Yellow
+    (0, 255, 0),    # Green
+    (0, 0, 255),    # Blue
+    (75, 0, 130)    # Purple
+]
+
 # Game settings
 width = 600
 height = 400
@@ -41,7 +51,12 @@ def draw_dropdown(countries, selected_country, dropdown_open):
     if dropdown_open:
         for i, country in enumerate(countries):
             item_rect = pygame.Rect(width / 4, height / 3 + 30 * (i + 1), width / 2, 30)
-            pygame.draw.rect(display, blue, item_rect)
+            if country == selected_country:
+                # Highlight selected country with pride colors
+                for j, color in enumerate(pride_colors):
+                    pygame.draw.rect(display, color, item_rect.move(0, j * 5), (item_rect.width, item_rect.height // len(pride_colors)))
+            else:
+                pygame.draw.rect(display, blue, item_rect)
             item_text = font.render(country, True, white)
             display.blit(item_text, (item_rect.x + 5, item_rect.y + 5))
 

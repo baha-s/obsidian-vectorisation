@@ -170,11 +170,11 @@ def gameLoop():
     foodx = round(random.randrange(0, width - snake_block) / 10.0) * 10.0
     foody = round(random.randrange(0, height - snake_block) / 10.0) * 10.0
 
-    # Generate a background using DALL-E
+    # Select the country and generate a background using DALL-E
+    country = ask_country(pygame.Surface((width, height)))
     background_path = os.path.join("flags", "background.png")
-    generate_background("A colorful abstract background for a snake game", background_path)
+    generate_background(f"A colorful abstract background for {country}", background_path)
     background = pygame.image.load(background_path).convert()
-    country = ask_country(background)
     draw_flag = select_flag(country)
 
     frame_count = 0

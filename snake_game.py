@@ -226,7 +226,7 @@ def gameLoop():
         # Update the snake's position
         x1 += x1_change
         y1 += y1_change
-        display.fill(white)
+        display.blit(background, (0, 0))
         draw_flag()  # Draw the selected country's flag
         pygame.draw.rect(display, green, [foodx, foody, snake_block, snake_block])  # Draw the food
         snake_Head = [x1, y1]

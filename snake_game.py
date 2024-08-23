@@ -166,7 +166,7 @@ def gameLoop():
     display = pygame.display.set_mode((width, height))
     pygame.display.set_caption('Snake Game')
     background_path = os.path.join("flags", "background.png")
-    generate_background(f"A colorful abstract background with the flag of {country}", background_path)
+    generate_background(f"A minimalist background with the flag of {country}", background_path)
     background = pygame.image.load(background_path).convert()
     select_flag(country)
 

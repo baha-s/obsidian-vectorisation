@@ -9,13 +9,14 @@ pygame.init()
 white = (255, 255, 255)
 yellow = (255, 255, 102)
 black = (0, 0, 0)
-red = (204, 0, 0)  # Union Jack red
+red = (230, 0, 0)  # Kyrgyzstan flag red
 green = (0, 255, 0)
-blue = (0, 0, 102)  # Union Jack blue
+blue = (0, 0, 102)
 sky_blue = (0, 191, 255)  # Sky blue for the background
 gold = (255, 215, 0)  # Gold for the sun
 skin_color = (255, 224, 189)  # Skin tone for explosion
 nipple_color = (255, 192, 203)  # Light pink for nipples
+kyrgyzstan_yellow = (255, 210, 0)  # Kyrgyzstan flag yellow
 
 # Game settings
 width = 600
@@ -37,34 +38,40 @@ score_font = pygame.font.SysFont("comicsansms", 35)
 # Load sound
 eat_sound = pygame.mixer.Sound("eat_sound.wav")  # Ensure you have this sound file in the same directory
 
-def draw_union_jack():
+def draw_kyrgyzstan_flag():
     # Set flag dimensions (3:5 ratio)
     flag_width = width
     flag_height = int(flag_width * 3 / 5)
     offset_y = (height - flag_height) // 2
 
-    # Draw the blue background
-    display.fill(blue)
+    # Draw the red background
+    display.fill(red)
 
-    # Draw the white diagonals
-    diagonal_width = flag_height // 6
-    pygame.draw.polygon(display, white, [(0, offset_y), (diagonal_width, offset_y), (flag_width, flag_height + offset_y - diagonal_width), (flag_width, flag_height + offset_y)])
-    pygame.draw.polygon(display, white, [(0, flag_height + offset_y), (diagonal_width, flag_height + offset_y), (flag_width, offset_y + diagonal_width), (flag_width, offset_y)])
+    # Draw the yellow sun
+    center_x = width // 2
+    center_y = height // 2
+    sun_radius = min(width, height) // 4
+    pygame.draw.circle(display, kyrgyzstan_yellow, (center_x, center_y), sun_radius)
 
-    # Draw the red diagonals
-    red_diagonal_width = flag_height // 10
-    pygame.draw.polygon(display, red, [(0, offset_y), (red_diagonal_width, offset_y), (flag_width, flag_height + offset_y - red_diagonal_width), (flag_width, flag_height + offset_y)])
-    pygame.draw.polygon(display, red, [(0, flag_height + offset_y), (red_diagonal_width, flag_height + offset_y), (flag_width, offset_y + red_diagonal_width), (flag_width, offset_y)])
+    # Draw sun rays
+    for i in range(40):
+        angle = i * (360 / 40)
+        start_x = center_x + int(sun_radius * 0.8 * pygame.math.Vector2(1, 0).rotate(angle).x)
+        start_y = center_y + int(sun_radius * 0.8 * pygame.math.Vector2(1, 0).rotate(angle).y)
+        end_x = center_x + int(sun_radius * 1.15 * pygame.math.Vector2(1, 0).rotate(angle).x)
+        end_y = center_y + int(sun_radius * 1.15 * pygame.math.Vector2(1, 0).rotate(angle).y)
+        pygame.draw.line(display, kyrgyzstan_yellow, (start_x, start_y), (end_x, end_y), 3)
 
-    # Draw the white cross
-    cross_width = flag_height // 3
-    pygame.draw.rect(display, white, [0, offset_y + (flag_height - cross_width) // 2, flag_width, cross_width])
-    pygame.draw.rect(display, white, [(flag_width - cross_width) // 2, offset_y, cross_width, flag_height])
-
-    # Draw the red cross
-    red_cross_width = flag_height // 5
-    pygame.draw.rect(display, red, [0, offset_y + (flag_height - red_cross_width) // 2, flag_width, red_cross_width])
-    pygame.draw.rect(display, red, [(flag_width - red_cross_width) // 2, offset_y, red_cross_width, flag_height])
+    # Draw the tunduk (yurt ring) symbol
+    tunduk_radius = sun_radius * 0.4
+    pygame.draw.circle(display, red, (center_x, center_y), tunduk_radius)
+    for i in range(4):
+        angle = i * 90 + 45
+        start_x = center_x + int(tunduk_radius * pygame.math.Vector2(1, 0).rotate(angle).x)
+        start_y = center_y + int(tunduk_radius * pygame.math.Vector2(1, 0).rotate(angle).y)
+        end_x = center_x + int(tunduk_radius * 1.4 * pygame.math.Vector2(1, 0).rotate(angle).x)
+        end_y = center_y + int(tunduk_radius * 1.4 * pygame.math.Vector2(1, 0).rotate(angle).y)
+        pygame.draw.line(display, red, (start_x, start_y), (end_x, end_y), 5)
 
 def our_snake(snake_block, snake_list):
     for x in snake_list:
@@ -88,7 +95,7 @@ def explosion_effect(x, y):
         pygame.draw.circle(display, nipple_color, (int(x + radius // 2), int(y)), radius // 5)  # Right nipple
         pygame.display.update()
         time.sleep(0.05)  # Delay for effect
-        draw_union_jack()  # Redraw the flag to clear the explosion effect
+        draw_kyrgyzstan_flag()  # Redraw the flag to clear the explosion effect
 
 def gameLoop():
     print("Starting game loop...")  # Debugging statement
@@ -146,7 +153,7 @@ def gameLoop():
 
         x1 += x1_change
         y1 += y1_change
-        draw_union_jack()  # Draw the flag as the background
+        draw_kyrgyzstan_flag()  # Draw the Kyrgyzstan flag as the background
         pygame.draw.rect(display, green, [foodx, foody, snake_block, snake_block])
         snake_Head = []
         snake_Head.append(x1)

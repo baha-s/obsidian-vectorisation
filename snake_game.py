@@ -187,14 +187,15 @@ def gameLoop():
         # Check if the snake has eaten the food
         if x1 == foodx and y1 == foody:
             print("Food eaten!")
-            eat_sound.play()  # Play the sound effect
+            if score % 3 == 0:  # Check if the score is a multiple of 3
+                print(f"Special sound should play now! Score: {score}")
+                special_sound.play()  # Play the special sound effect
+            else:
+                eat_sound.play()  # Play the sound effect
             foodx = round(random.randrange(0, width - snake_block) / 10.0) * 10.0
             foody = round(random.randrange(0, height - snake_block) / 10.0) * 10.0
             Length_of_snake += 1  # Increase the length of the snake
             score = Length_of_snake - 1  # Update the score
-            if score % 3 == 0:  # Check if the score is a multiple of 3
-                print(f"Special sound should play now! Score: {score}")
-                special_sound.play()  # Play the special sound effect
 
         clock.tick(snake_speed)  # Control the frame rate
 

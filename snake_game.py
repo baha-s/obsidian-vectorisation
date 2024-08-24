@@ -156,13 +156,9 @@ def gameLoop():
                     y1_change = snake_block
                     x1_change = 0
 
-        # Check for collision with the boundaries
-        if x1 >= width or x1 < 0 or y1 >= height or y1 < 0:
-            game_over = True
-
-        # Update the snake's position
-        x1 += x1_change
-        y1 += y1_change
+        # Update the snake's position and wrap around if it hits the boundaries
+        x1 = (x1 + x1_change) % width
+        y1 = (y1 + y1_change) % height
 
         # Update the snake's body
         snake_Head = [x1, y1]

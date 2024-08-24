@@ -113,9 +113,6 @@ def display_score(score):
     display.blit(score_text, [0, 0])
 
 def gameLoop():
-    """Display the current score on the screen."""
-    score_text = score_font.render(f"Score: {score}", True, black)
-    display.blit(score_text, [0, 0])
     game_over = False
     game_close = False
 

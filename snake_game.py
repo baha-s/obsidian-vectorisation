@@ -5,6 +5,9 @@ from dalle_integration import generate_background
 import os
 from hello import hello
 
+# Initialize the mixer
+pygame.mixer.init()
+
 # Load the sound effect
 eat_sound = pygame.mixer.Sound("eat_sound.wav")
 

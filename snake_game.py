@@ -158,7 +158,7 @@ def gameLoop():
 
         # Check for collision with the boundaries
         if x1 >= width or x1 < 0 or y1 >= height or y1 < 0:
-            game_close = True
+            game_over = True
 
         # Update the snake's position
         x1 += x1_change

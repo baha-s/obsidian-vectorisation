@@ -5,6 +5,9 @@ from dalle_integration import generate_background
 import os
 from hello import hello
 
+# Load the sound effect
+eat_sound = pygame.mixer.Sound("eat_sound.wav")
+
 # Initialize Pygame
 pygame.init()
 
@@ -178,6 +181,7 @@ def gameLoop():
         # Check if the snake has eaten the food
         if x1 == foodx and y1 == foody:
             print("Food eaten!")
+            eat_sound.play()  # Play the sound effect
             foodx = round(random.randrange(0, width - snake_block) / 10.0) * 10.0
             foody = round(random.randrange(0, height - snake_block) / 10.0) * 10.0
             Length_of_snake += 1  # Increase the length of the snake

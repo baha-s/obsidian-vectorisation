@@ -107,7 +107,10 @@ def message(msg, color):
     mesg = font_style.render(msg, True, color)
     display.blit(mesg, [width / 6, height / 3])
 
-def gameLoop():
+def display_score(score):
+    """Display the current score on the screen."""
+    score_text = score_font.render(f"Score: {score}", True, black)
+    display.blit(score_text, [0, 0])
     # Main game loop
     game_over = False
     game_close = False
@@ -171,6 +174,7 @@ def gameLoop():
             if x == snake_Head:
                 game_close = True
 
+        display_score(Length_of_snake - 1)  # Display the score
         draw_snake(snake_List)  # Draw the snake
 
         pygame.draw.rect(display, green, [foodx, foody, snake_block, snake_block])  # Draw the food

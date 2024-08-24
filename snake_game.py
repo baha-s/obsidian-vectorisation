@@ -36,6 +36,11 @@ clock = pygame.time.Clock()
 font_style = pygame.font.SysFont("bahnschrift", 25)
 score_font = pygame.font.SysFont("comicsansms", 35)
 
+def draw_snake(snake_list):
+    for i, segment in enumerate(snake_list):
+        color = (0, 255 - i * 5, 0)  # Gradient effect for the snake
+        pygame.draw.rect(display, color, [segment[0], segment[1], snake_block, snake_block])
+
 def ask_country(background):
     width, height = 600, 400
     display = pygame.display.set_mode((width, height))
@@ -91,11 +96,6 @@ def select_flag(country):
     # Select the appropriate flag drawing function based on the country
     display.fill(white)  # Default background if no specific flag is available
 
-def our_snake(snake_block, snake_list):
-    # Draw the snake on the display
-    for x in snake_list:
-        pygame.draw.rect(display, black, [x[0], x[1], snake_block, snake_block])
-
 def message(msg, color):
     # Display a message on the screen
     mesg = font_style.render(msg, True, color)
@@ -123,35 +123,15 @@ def gameLoop():
 
     # Select the country and generate a background using DALL-E
     country = ask_country(pygame.Surface((width, height)))
-    display = pygame.display.set_mode((width, height))
-    pygame.display.set_caption('Snake Game')
     background_path = os.path.join("flags", "background.png")
     generate_background(f"A minimalist background with the flag of {country}", background_path)
     background = pygame.image.load(background_path).convert()
     background = pygame.transform.scale(background, (width, height))  # Scale the background to fit the display
     select_flag(country)
 
-    frame_count = 0
-
     while not game_over:
-        frame_count += 1
-        print(f"Frame: {frame_count}, Snake position: ({x1}, {y1}), Food position: ({foodx}, {foody})")
-
-        while game_close:
-            display.fill(blue)
-            message("You Lost! Press C-Play Again or Q-Quit", red)
-            pygame.display.update()
-
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    game_over = True
-                    game_close = False
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_q:
-                        game_over = True
-                        game_close = False
-                    if event.key == pygame.K_c:
-                        gameLoop()
+        display.blit(background, (0, 0))  # Draw the scaled background
+        print(f"Snake position: ({x1}, {y1}), Food position: ({foodx}, {foody})")
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -177,8 +157,8 @@ def gameLoop():
         # Update the snake's position
         x1 += x1_change
         y1 += y1_change
-        display.blit(background, (0, 0))  # Draw the scaled background
-        pygame.draw.rect(display, green, [foodx, foody, snake_block, snake_block])  # Draw the food
+
+        # Update the snake's body
         snake_Head = [x1, y1]
         snake_List.append(snake_Head)
         if len(snake_List) > Length_of_snake:
@@ -189,8 +169,9 @@ def gameLoop():
             if x == snake_Head:
                 game_close = True
 
-        our_snake(snake_block, snake_List)  # Draw the snake
+        draw_snake(snake_List)  # Draw the snake
 
+        pygame.draw.rect(display, green, [foodx, foody, snake_block, snake_block])  # Draw the food
         pygame.display.update()
 
         # Check if the snake has eaten the food

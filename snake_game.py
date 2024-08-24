@@ -187,7 +187,7 @@ def gameLoop():
         # Check if the snake has eaten the food
         if x1 == foodx and y1 == foody:
             print("Food eaten!")
-            if score % 3 == 0:  # Check if the score is a multiple of 3
+            if score % 5 == 0:  # Check if the score is a multiple of 5
                 print(f"Special sound should play now! Score: {score}")
                 special_sound.play()  # Play the special sound effect
             else:

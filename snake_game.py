@@ -193,6 +193,7 @@ def gameLoop():
             Length_of_snake += 1  # Increase the length of the snake
             score = Length_of_snake - 1  # Update the score
             if score % 10 == 0:  # Check if the score is a multiple of 10
+                print(f"Special sound should play now! Score: {score}")
                 special_sound.play()  # Play the special sound effect
 
         clock.tick(snake_speed)  # Control the frame rate

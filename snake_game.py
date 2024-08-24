@@ -107,11 +107,14 @@ def message(msg, color):
     mesg = font_style.render(msg, True, color)
     display.blit(mesg, [width / 6, height / 3])
 
+def gameLoop():
+    """Display the current score on the screen."""
+    score_text = score_font.render(f"Score: {score}", True, black)
+    display.blit(score_text, [0, 0])
 def display_score(score):
     """Display the current score on the screen."""
     score_text = score_font.render(f"Score: {score}", True, black)
     display.blit(score_text, [0, 0])
-    # Main game loop
     game_over = False
     game_close = False
 

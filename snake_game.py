@@ -10,7 +10,8 @@ pygame.mixer.init()
 # Load the sound effect
 eat_sound = pygame.mixer.Sound("eat_sound.wav")
 
-# Initialize Pygame
+# Load the special sound effect
+special_sound = pygame.mixer.Sound("special_sound.wav")
 pygame.init()
 
 # Define colors used in the game
@@ -191,6 +192,8 @@ def gameLoop():
             foody = round(random.randrange(0, height - snake_block) / 10.0) * 10.0
             Length_of_snake += 1  # Increase the length of the snake
             score = Length_of_snake - 1  # Update the score
+            if score % 10 == 0:  # Check if the score is a multiple of 10
+                special_sound.play()  # Play the special sound effect
 
         clock.tick(snake_speed)  # Control the frame rate
 

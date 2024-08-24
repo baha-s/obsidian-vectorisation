@@ -192,7 +192,7 @@ def gameLoop():
             foody = round(random.randrange(0, height - snake_block) / 10.0) * 10.0
             Length_of_snake += 1  # Increase the length of the snake
             score = Length_of_snake - 1  # Update the score
-            if score % 10 == 0:  # Check if the score is a multiple of 10
+            if score % 3 == 0:  # Check if the score is a multiple of 3
                 print(f"Special sound should play now! Score: {score}")
                 special_sound.play()  # Play the special sound effect
 

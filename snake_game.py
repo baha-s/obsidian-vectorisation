@@ -134,6 +134,8 @@ def gameLoop():
     foodx = round(random.randrange(0, width - snake_block) / 10.0) * 10.0
     foody = round(random.randrange(0, height - snake_block) / 10.0) * 10.0
 
+    score = Length_of_snake - 1
+
     # Select the country and generate a background using DALL-E
     country = ask_country(pygame.Surface((width, height)))
     background_path = os.path.join("flags", "background.png")
@@ -178,7 +180,6 @@ def gameLoop():
             if x == snake_Head:
                 game_close = True
 
-        score = Length_of_snake - 1
         display_score(score)  # Display the score
         draw_snake(snake_List)  # Draw the snake
 

@@ -3,6 +3,7 @@ import random
 import sys
 from dalle_integration import generate_background
 import os
+from hello import hello
 
 # Initialize Pygame
 pygame.init()

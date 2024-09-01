@@ -27,3 +27,8 @@ coverage.xml
 *.tmp
 *.temp
 .aider
+.aider.tags.cache.v3/
+.aider.chat.history.md
+.aider.input.history
+# Ignore all .aider files
+.aider*

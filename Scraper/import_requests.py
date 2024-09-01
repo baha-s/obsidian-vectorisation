@@ -8,6 +8,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import time
 
 def setup_driver():
     """
@@ -15,10 +16,11 @@ def setup_driver():
     
     :return: Configured WebDriver instance
     """
-    service = Service('path/to/chromedriver')  # Update this path
     options = Options()
     options.add_argument('--headless')  # Run in headless mode
-    return webdriver.Chrome(service=service, options=options)
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-dev-shm-usage')
+    return webdriver.Chrome(options=options)  # Remove 'service' parameter
 
 def scrape_template_list(url, driver):
     """
@@ -31,8 +33,8 @@ def scrape_template_list(url, driver):
     driver.get(url)
     
     # Wait for the template cards to load
-    WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.CSS_SELECTOR, "div[data-testid='template-card']"))
+    WebDriverWait(driver, 20).until(
+        EC.presence_of_all_elements_located((By.CSS_SELECTOR, "div[data-testid='template-card']"))
     )
     
     templates = []
@@ -64,8 +66,13 @@ def scrape_template_details(template_url, driver):
     title = driver.find_element(By.CSS_SELECTOR, "h1[data-testid='template-name']").text
     
     # The description might be in a different location, adjust as needed
-    description_elem = driver.find_element(By.CSS_SELECTOR, "div[data-testid='template-description']")
-    description = description_elem.text if description_elem else 'No description'
+    try:
+        description_elem = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, "div[data-testid='template-description']"))
+        )
+        description = description_elem.text
+    except:
+        description = 'No description'
 
     return {
         'title': title,
@@ -89,9 +96,13 @@ def scrape_templates(start_url):
         # Then, scrape details for each individual template
         for template_name, template_url in templates:
             print(f"Scraping template: {template_name}")
-            template_data = scrape_template_details(template_url, driver)
-            if template_data:
-                data.append(template_data)
+            try:
+                template_data = scrape_template_details(template_url, driver)
+                if template_data:
+                    data.append(template_data)
+            except Exception as e:
+                print(f"Error scraping {template_name}: {str(e)}")
+            time.sleep(1)  # Add a small delay between requests
 
         return data
     finally:

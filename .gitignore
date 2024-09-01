@@ -17,3 +17,4 @@ dist/
 build/
 # Ignore Jupyter Notebook checkpoints
 .ipynb_checkpoints/
+.aider

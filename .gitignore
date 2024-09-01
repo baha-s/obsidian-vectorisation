@@ -17,4 +17,13 @@ dist/
 build/
 # Ignore Jupyter Notebook checkpoints
 .ipynb_checkpoints/
+# Ignore coverage reports
+.coverage
+htmlcov/
+# Ignore test result files
+nosetests.xml
+coverage.xml
+# Ignore temporary files
+*.tmp
+*.temp
 .aider

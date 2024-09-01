@@ -1,4 +1,19 @@
 # Ignore Python virtual environments
 venv/
-.aider*
+# Ignore Python bytecode
+__pycache__/
+# Ignore IDE configurations
+.idea/
+.vscode/
+# Ignore log files
+*.log
+# Ignore environment variables
 .env
+# Ignore compiled files
+*.pyc
+*.pyo
+# Ignore distribution packages
+dist/
+build/
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints/
